@@ -1,0 +1,5 @@
+# configure file
+config/
+
+# Python
+*.py[cod]
