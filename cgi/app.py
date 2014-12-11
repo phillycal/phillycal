@@ -7,7 +7,7 @@ buf = {}
 
 web_dir = '../web'
 
-@app.route('/<filetype:re:(css|js|image)>/<filename>')
+@app.route('/<filetype:re:(css|js|image|lib)>/<filename>')
 def static_web(filetype, filename):
     return static_file(filename, root=web_dir + '/' + filetype)
 
@@ -19,5 +19,9 @@ def home():
         with open(web_dir + '/html/home.html') as f:
             buf[buf_key] = template(f.read(), API_KEY=conf.read('google_map_api_key'))
     return buf[buf_key]
- 
+
+@app.route('/newdata', method='post')
+def newdata():
+    pass
+
 run(app, host='localhost', port=8080)

@@ -3,3 +3,6 @@ config/
 
 # Python
 *.py[cod]
+
+# bower
+web/bower_components/
