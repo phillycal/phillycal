@@ -1,4 +1,4 @@
-from bottle import Bottle, run, template, static_file
+from bottle import Bottle, run, template, static_file, request
 import configure as conf
  
 app = Bottle()
@@ -20,8 +20,11 @@ def home():
             buf[buf_key] = template(f.read(), API_KEY=conf.read('google_map_api_key'))
     return buf[buf_key]
 
-@app.route('/newdata', method='post')
+@app.route('/data/new', method='post')
 def newdata():
-    pass
+    udata = request.json
+    print udata
+    # store data
+    return 'success'
 
 run(app, host='localhost', port=8080)

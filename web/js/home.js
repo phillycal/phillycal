@@ -181,6 +181,41 @@ function initialize() {
     }
     marker.setMap(null);
   };
+
+  var btnUpload = $('#btn-upload');
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(btnUpload[0]);
+
+  btnUpload.on('click', function(){
+    postData();
+  });
+
+  var simplifyMarkers = function(markers) {
+    return $.map(markers, function(marker){
+      return {
+        'position': marker.getPosition().toString(),
+        'name': marker.getTitle(),
+        'period': marker.exAttrs.period,
+        'hours': marker.exAttrs.hours
+      }
+    });
+  }
+
+  var postData = function() {
+    $.ajax({
+      type: 'POST',
+      url: '/data/new',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        markers: simplifyMarkers(addedMarkers)
+      }),
+      success: function(data, status, xhr){
+        alert(data);
+      },
+      error: function(xhr, error, exception){
+        alert(error);
+      }
+    });
+  };
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
